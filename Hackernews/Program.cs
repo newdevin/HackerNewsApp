@@ -27,8 +27,9 @@ namespace Hackernews
 
                 var httpClientFactory = services.GetService<IHttpClientFactory>();
                 var uriProvider = services.GetService<IUriProvider>();
+                var mapper = services.GetService<IMapper>();
 
-                var client = new HackernewsClient(httpClientFactory, uriProvider);
+                var client = new HackernewsClient(httpClientFactory, uriProvider, mapper);
 
                 var topPosts = client.GetTopPosts(posts.Value).Result;
                 PrettyPrint(topPosts);
@@ -60,6 +61,7 @@ namespace Hackernews
 
             var serviceProvider = new ServiceCollection();
             serviceProvider.AddHttpClient();
+            serviceProvider.AddTransient<IMapper, Mapper>();
             serviceProvider.AddTransient<IUriProvider>(services =>
             {
                 return new HackernewUriProvider(configuration);

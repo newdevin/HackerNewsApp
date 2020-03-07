@@ -13,11 +13,13 @@ namespace Hackernews
     {
         private readonly IHttpClientFactory httpClientFactory;
         private readonly IUriProvider uriProvider;
+        private readonly IMapper mapper;
 
-        public HackernewsClient(IHttpClientFactory httpClientFactory, IUriProvider uriProvider)
+        public HackernewsClient(IHttpClientFactory httpClientFactory, IUriProvider uriProvider, IMapper mapper)
         {
             this.httpClientFactory = httpClientFactory;
             this.uriProvider = uriProvider;
+            this.mapper = mapper;
         }
 
         public async Task<IEnumerable<Post>> GetTopPosts(int top)
@@ -75,19 +77,8 @@ namespace Hackernews
             var uri = uriProvider.GetItemUri(i);
             var result = await GetResponse(uri,"items");
             var hackernewsPost = JsonConvert.DeserializeObject<HackernewsPost>(result);
-            return ToPost(hackernewsPost);
+            return mapper.ToPost(hackernewsPost);
         }
-
-        private Post ToPost(HackernewsPost hackernewsPost)
-        {
-            return new Post
-            {
-                Author = hackernewsPost.By,
-                Comments = hackernewsPost.Kids.Count(),
-                Points = hackernewsPost.Score,
-                Title = hackernewsPost.Title,
-                Uri = hackernewsPost.Url
-            };
-        }
+                
     }
 }
