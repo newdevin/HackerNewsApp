@@ -61,7 +61,7 @@ namespace Hackernews
 
             var serviceProvider = new ServiceCollection();
             serviceProvider.AddHttpClient();
-            serviceProvider.AddTransient<IMapper, Mapper>();
+            serviceProvider.AddTransient<IMapper, MApper>();
             serviceProvider.AddTransient<IUriProvider>(services =>
             {
                 return new HackernewUriProvider(configuration);

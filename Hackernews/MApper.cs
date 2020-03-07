@@ -6,18 +6,12 @@ using System.Text;
 
 namespace Hackernews
 {
-    public class Mapper : IMapper
+    public class MApper : IMapper
     {
         public Post ToPost(HackernewsPost hackernewsPost)
         {
-            return new Post
-            {
-                Author = hackernewsPost.By,
-                Comments = hackernewsPost.Kids.Count(),
-                Points = hackernewsPost.Score,
-                Title = hackernewsPost.Title,
-                Uri = hackernewsPost.Url
-            };
+            return new Post(hackernewsPost.Title, hackernewsPost.Url, hackernewsPost.By, hackernewsPost.Score, hackernewsPost.Kids.Count());
+
         }
     }
 }

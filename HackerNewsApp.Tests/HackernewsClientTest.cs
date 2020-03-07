@@ -46,7 +46,7 @@ namespace Hackernews.Tests
             uriProvider.GetItemUri(Arg.Any<int>()).Returns((i) => new Uri("http://someuri.com"));
 
 
-            var hackernewsClient = new HackernewsClient(httpClientFactory, uriProvider, new Mapper());
+            var hackernewsClient = new HackernewsClient(httpClientFactory, uriProvider, new MApper());
             var actualPosts = hackernewsClient.GetTopPosts(posts.Count()).Result;
 
             Assert.Equal(posts.Count(), actualPosts.Count());
